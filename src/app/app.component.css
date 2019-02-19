@@ -1,0 +1,30 @@
+.text-center{
+    text-align: center;
+}
+
+.text-left{
+    text-align: left;
+}
+
+.text-right{
+    text-align: right;
+}
+
+.weather-form-background{
+    background-image: linear-gradient(#4FC9A3, #1D00FF);
+    width: 80%;
+    margin: 0% 5% 0% 5%;
+    border-radius: 4px;
+    height: 170px;
+    padding: 2% 5% 0% 5%;
+}
+
+.chart-alignment{
+    width: 90% !important;
+    margin: 4% 5% 0% 5%;
+    height: 500px !important;
+}
+
+.example-button-row{
+    margin: 30% 0% 0% 10%;
+}

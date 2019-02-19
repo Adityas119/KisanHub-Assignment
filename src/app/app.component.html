@@ -1,20 +1,67 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+<mat-toolbar>Title</mat-toolbar>
+<div class="text-center">
+  <h2>Report</h2>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
-
+<div>
+  <div class="weather-form-background">
+    <form [formGroup]="acceptInputsForReport">
+      <mat-grid-list cols="5" gutterSize="10px">
+        <mat-grid-tile>
+          <h4>Select Start Date</h4>
+          <mat-form-field>
+            <input matInput [matDatepicker]="startDatePicker" [min]="minDate" [max]="maxDate" placeholder="Month and Year" formControlName="firstDate">
+            <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #startDatePicker startView="multi-year"
+              panelClass="example-month-picker">
+            </mat-datepicker>
+            <mat-error align="end" *ngIf="acceptInputsForReport.controls.firstDate.errors?.required">
+              Select Correct Start Date
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <h4>Select End Date</h4>
+          <mat-form-field>
+            <input matInput [matDatepicker]="endDatePicker" [min]="minDate" [max]="maxDate" placeholder="Month and Year" formControlName="lastDate">
+            <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #endDatePicker startView="multi-year" 
+              panelClass="example-month-picker">
+            </mat-datepicker>
+            <mat-error align="end" *ngIf="acceptInputsForReport.controls.lastDate.errors?.required">
+              Select Correct Last Date
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <h4>Select Metric</h4>
+          <mat-form-field>
+            <mat-select placeholder="Metrics" formControlName="metric">
+              <mat-option *ngFor="let item of metricArr" [value]="item">
+                {{item}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <h4>Select Region</h4>
+          <mat-form-field>
+            <mat-select placeholder="Region" formControlName="region">
+              <mat-option *ngFor="let item of regionArr" [value]="item">
+                {{item}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <div class="example-button-row">
+            <button mat-raised-button color="primary" (click)="submitInputs()">Submit</button>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </form>
+  </div>
+</div>
+<div [hidden]="!showChart">
+  <canvas id="canvas" class="chart-alignment" >{{ chart }}</canvas>
+</div>
