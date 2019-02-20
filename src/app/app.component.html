@@ -1,13 +1,13 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<mat-toolbar>Title</mat-toolbar>
+<mat-toolbar>Kisan Hub</mat-toolbar>
 <div class="text-center">
-  <h2>Report</h2>
+  <h2>Weather Report</h2>
 </div>
 <div>
   <div class="weather-form-background">
     <form [formGroup]="acceptInputsForReport">
-      <mat-grid-list cols="5" gutterSize="10px">
-        <mat-grid-tile>
+      <mat-grid-list [cols]="breakpoint" gutterSize="10px" rowHeight="4rem">
+        <mat-grid-tile [colspan]="1" [rowspan]="2">
           <h4>Select Start Date</h4>
           <mat-form-field>
             <input matInput [matDatepicker]="startDatePicker" [min]="minDate" [max]="maxDate" placeholder="Month and Year" formControlName="firstDate">
@@ -20,10 +20,10 @@
             </mat-error>
           </mat-form-field>
         </mat-grid-tile>
-        <mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="2">
           <h4>Select End Date</h4>
           <mat-form-field>
-            <input matInput [matDatepicker]="endDatePicker" [min]="minDate" [max]="maxDate" placeholder="Month and Year" formControlName="lastDate">
+            <input matInput [matDatepicker]="endDatePicker" [min]="firstDate" [max]="maxDate" placeholder="Month and Year" formControlName="lastDate">
             <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #endDatePicker startView="multi-year" 
               panelClass="example-month-picker">
@@ -33,7 +33,7 @@
             </mat-error>
           </mat-form-field>
         </mat-grid-tile>
-        <mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="2">
           <h4>Select Metric</h4>
           <mat-form-field>
             <mat-select placeholder="Metrics" formControlName="metric">
@@ -43,7 +43,7 @@
             </mat-select>
           </mat-form-field>
         </mat-grid-tile>
-        <mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="2">
           <h4>Select Region</h4>
           <mat-form-field>
             <mat-select placeholder="Region" formControlName="region">
@@ -52,11 +52,6 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-        </mat-grid-tile>
-        <mat-grid-tile>
-          <div class="example-button-row">
-            <button mat-raised-button color="primary" (click)="submitInputs()">Submit</button>
-          </div>
         </mat-grid-tile>
       </mat-grid-list>
     </form>

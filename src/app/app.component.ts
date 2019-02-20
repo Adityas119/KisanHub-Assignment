@@ -22,9 +22,11 @@ export class AppComponent {
   chart: any = [];
   senDataToGraph: any;
   showChart: Boolean = false;
+  breakpoint: any;
   @ViewChild('canvas') canvas: ElementRef;
+  firstDate: Date;
 
-  
+
 
   constructor(private http: HttpClient) {
 
@@ -33,6 +35,8 @@ export class AppComponent {
 
   ngOnInit() {
 
+    this.breakpoint = (window.innerWidth <= 400) ? 1 : 4;
+
     this.acceptInputsForReport = new FormGroup({
       firstDate: new FormControl('', [Validators.required]),
       lastDate: new FormControl('', [Validators.required]),
@@ -40,11 +44,20 @@ export class AppComponent {
       region: new FormControl('', [Validators.required])
     })
 
+    this.acceptInputsForReport.setValue({
+      firstDate: new Date("Sun Jan 03 1993"),
+      lastDate: new Date("Sun Jan 01 2017"),
+      metric: 'Max Temp',
+      region: 'England'
+    })
+    this.submitInputs();
+    this.acceptInputsForReport.valueChanges.subscribe(base => { this.submitInputs() })
   }
-  
+
 
   submitInputs() {
 
+    this.firstDate = this.acceptInputsForReport.get("firstDate").value;
     let sendMetric: string;
     let sendLocation: string = this.acceptInputsForReport.value.region;
 
@@ -72,6 +85,8 @@ export class AppComponent {
           let endPointIndex: any;
           let startPointData: any;
           let endPointData: any;
+          let xAxisData = [];
+          let yAxisData = [];
 
           data.map(function (res, index) {
             if (sendStartYear == res.year && sendStartMonth == res.month) {
@@ -82,49 +97,41 @@ export class AppComponent {
             }
           })
 
-          let xAxisData = [];
-          let yAxisData = [];
-          // let yearNmonth = 
-
           this.senDataToGraph = data.slice(startPointIndex, endPointIndex)
-          this.senDataToGraph.forEach(function (data) { xAxisData.push(data.month + "/" +data.year) })
+          this.senDataToGraph.forEach(function (data) { xAxisData.push(data.month + "/" + data.year) })
           this.senDataToGraph.forEach(function (data) { yAxisData.push(data.value) })
-
-          this.showChart = true;
-
-          this.chart = new Chart('canvas', {
-            type: 'line',
-            data: {
-              labels: xAxisData,
-              datasets: [
-                // {
-                //   data: [],
-                //   borderColor: "#3cba9f",
-                //   fill: false
-                // },
-                {
-                  data: yAxisData,
-                  borderColor: "#ffcc00",
-                  fill: false
-                },
-              ]
-            },
-            options: {
-              legend: {
-                display: false
-              },
-              scales: {
-                xAxes: [{
-                  display: true
-                }],
-                yAxes: [{
-                  display: true
-                }],
-              }
-            }
-          })
+          this.displayChart(xAxisData, yAxisData);
         }
       )
+  }
+  displayChart(x, y) {
+    this.showChart = true;
+    this.chart = new Chart('canvas', {
+      type: 'line',
+      data: {
+        labels: x,
+        datasets: [
+          {
+            data: y,
+            borderColor: "#4FC9A3",
+            fill: false
+          },
+        ]
+      },
+      options: {
+        legend: {
+          display: false
+        },
+        scales: {
+          xAxes: [{
+            display: true
+          }],
+          yAxes: [{
+            display: true
+          }],
+        }
+      }
+    })
   }
 
 }
