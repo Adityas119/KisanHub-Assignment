@@ -10,7 +10,7 @@
         <mat-grid-tile [colspan]="1" [rowspan]="2">
           <h4>Select Start Date</h4>
           <mat-form-field>
-            <input matInput [matDatepicker]="startDatePicker" [min]="minDate" [max]="maxDate" placeholder="Month and Year" formControlName="firstDate">
+            <input matInput [matDatepicker]="startDatePicker" [min]="minDate" [max]="maxDate" placeholder="Date" formControlName="firstDate">
             <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #startDatePicker startView="multi-year"
               panelClass="example-month-picker">
@@ -23,7 +23,7 @@
         <mat-grid-tile [colspan]="1" [rowspan]="2">
           <h4>Select End Date</h4>
           <mat-form-field>
-            <input matInput [matDatepicker]="endDatePicker" [min]="firstDate" [max]="maxDate" placeholder="Month and Year" formControlName="lastDate">
+            <input matInput [matDatepicker]="endDatePicker" [min]="firstDate" [max]="maxDate" placeholder="Date" formControlName="lastDate">
             <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
             <mat-datepicker #endDatePicker startView="multi-year" 
               panelClass="example-month-picker">
